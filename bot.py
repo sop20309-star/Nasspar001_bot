@@ -1,9 +1,11 @@
+import os
 import telebot
 from telebot import types
 from datetime import datetime
 
-# 💡 မဖြစ်မနေ ပြင်ဆင်ရမည့် အချက်များ
-TOKEN = "9082926169:AAFOnxwX2BfC6P1XfiQFCxAJyz02oZwk3g"            # BotFather ကရတဲ့ Bot Token
+# Railway Variables ထဲက BOT_TOKEN ကို ယူသုံးမည့်စနစ်
+TOKEN = os.environ.get('BOT_TOKEN', '9082926169:AAFOnxwX2BfC6P1XfiQFCxAJyz02oZwk3g')
+            # BotFather ကရတဲ့ Bot Token
 CHANNEL_USERNAME = "@seriesmoviesplanet007" # ကိုယ့်ရဲ့ Telegram Channel Username
 CREATOR_ID = 5188275898                    # သင့်ရဲ့ Telegram User ID (Log ပို့ရန်)
 
