@@ -3,25 +3,18 @@ from datetime import datetime
 import telebot
 from telebot import types
 
-# 💡 Railway Variables ထဲက BOT_TOKEN ကို ယူသုံးမည့်စနစ်
-TOKEN = os.environ.get(
-    "BOT_TOKEN", "9082926169:AAFOnxwX2BfC6P1XfiQFCxAJyz02oZwk3g"
-)
-CHANNEL_USERNAME = "@seriesmoviesplanet007"  # သင့်ရဲ့ Telegram Channel Username
-CREATOR_ID = 5188275898  # သင့်ရဲ့ Telegram User ID (Log ပို့ရန်)
+TOKEN = os.environ.get("BOT_TOKEN")
+CHANNEL_USERNAME = "@seriesmoviesplanet007"
+CREATOR_ID = 5188275898
 
-# ငွေပေးချေမှု အချက်အလက်များ
 KAY_PHONE = "09448948562"
 WAVE_PHONE = "09448948562"
 ACCOUNT_NAME = "Nyein Sopyay Aung"
 
 bot = telebot.TeleBot(TOKEN)
-
-# 📊 User အရေအတွက် မှတ်သားရန် ဖိုင်အမည်
 USER_DATA_FILE = "unique_users.txt"
 
 
-# Unique User များကို မှတ်သားပြီး စုစုပေါင်း ရေတွက်သည့် Function
 def track_and_count_user(user_id):
   users = set()
   if os.path.exists(USER_DATA_FILE):
@@ -42,7 +35,6 @@ def track_and_count_user(user_id):
   return len(users), is_new
 
 
-# User ဝင်ရောက်လာတိုင်း Creator ထံ Log ပို့ပေးမည့် Function
 def log_user_activity(message, action="စတင်အသုံးပြုခြင်း (/start)"):
   try:
     user = message.from_user
@@ -68,7 +60,6 @@ def log_user_activity(message, action="စတင်အသုံးပြုခ�
     print(f"Log Error: {e}")
 
 
-# Admin အတွက် စုစုပေါင်း သုံးစွဲသူဦးရေ စစ်ဆေးသည့် Command (/stats)
 @bot.message_handler(commands=["stats"])
 def show_stats(message):
   if message.from_user.id != CREATOR_ID:
@@ -87,7 +78,6 @@ def show_stats(message):
   )
 
 
-# Channel Join ပြီးပြီလား စစ်ဆေးသည့် Function
 def check_user_subscription(user_id):
   try:
     member = bot.get_chat_member(CHANNEL_USERNAME, user_id)
@@ -98,7 +88,6 @@ def check_user_subscription(user_id):
   return False
 
 
-# Main Menu ပြသသည့် Function
 def show_main_menu(chat_id):
   welcome_text = (
       "မင်္ဂလာပါ မိတ်ဆွေ..👋\n"
@@ -136,7 +125,6 @@ def show_main_menu(chat_id):
   )
 
 
-# /start Command Handler
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
   user_id = message.from_user.id
@@ -146,7 +134,7 @@ def send_welcome(message):
     markup = types.InlineKeyboardMarkup()
     btn_channel = types.InlineKeyboardButton(
         "📢 Channel သို့သွား၍ Join ရန်",
-        url=f"https://t.me/{CHANNEL_USERNAME.replace('@', '')}",
+        url="https://t.me/seriesmoviesplanet007",
     )
     btn_check = types.InlineKeyboardButton(
         "🔄 Join ပြီးပြီ (စစ်ဆေးရန်)", callback_data="check_sub"
@@ -167,7 +155,6 @@ def send_welcome(message):
   show_main_menu(message.chat.id)
 
 
-# Callback Query Handler (ခလုတ်များ နှိပ်သည့်အခါ တုံ့ပြန်ရန်)
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
   user_id = call.from_user.id
@@ -230,7 +217,6 @@ def callback_handler(call):
     bot.send_message(chat_id, prem_text, parse_mode="Markdown")
 
 
-# Smart Auto-Reply Handler
 @bot.message_handler(func=lambda message: True)
 def handle_text_messages(message):
   text = message.text.lower()
