@@ -127,7 +127,7 @@ def show_main_menu(chat_id):
       "💬 Admin (2) ဆက်သွယ်ရန်", url="https://t.me/hikarikenn"
   )
   btn5 = types.InlineKeyboardButton(
-      "👑 Nasspar's Premium Channel အကြောင်း", callback_data="premium_info"
+      "🔒 Nasspar's Premium Channel အကြောင်း", callback_data="premium_info"
   )
 
   markup.add(btn1, btn2, btn3, btn_admin1, btn_admin2, btn5)
@@ -230,12 +230,11 @@ def callback_handler(call):
     bot.send_message(chat_id, prem_text, parse_mode="Markdown")
 
 
-# Smart Auto-Reply Handler (User တွေ စာပို့မေးလာတဲ့အခါ အလိုအလျောက် ဖြေကြားရန်)
+# Smart Auto-Reply Handler
 @bot.message_handler(func=lambda message: True)
 def handle_text_messages(message):
   text = message.text.lower()
 
-  # ၁။ ဈေးနှုန်း / ငွေပေးချေမှု / မန်ဘာဝင်ရန် မေးလျှင်
   if any(
       kw in text
       for kw in [
@@ -263,7 +262,6 @@ def handle_text_messages(message):
     )
     bot.reply_to(message, reply)
 
-  # ၂။ Joe တစ်ခုတည်းလား / တခြားကားပါသေးလား / Season အကြောင်း မေးလျှင်
   elif any(
       kw in text
       for kw in [
@@ -289,7 +287,6 @@ def handle_text_messages(message):
     )
     bot.reply_to(message, reply)
 
-  # ၃။ အခြား အထွေထွေ မေးခွန်းများအတွက်
   else:
     ai_reply = (
         "🤖 **Nasspar's Bot AI Assistant:**\n\n"
